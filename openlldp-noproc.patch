@@ -1,0 +1,17 @@
+--- ./configure.in.org	2007-03-23 04:40:27.000000000 +0100
++++ ./configure.in	2007-11-24 22:57:18.402258633 +0100
+@@ -94,14 +94,6 @@ else
+   FRAMER="generic"
+ fi
+ 
+-if test $FRAMER = "linux"; then
+-   AC_MSG_CHECKING([for procfs support])
+-   if test -r /proc/net/dev; then
+-      AC_MSG_RESULT(okay)
+-   else
+-      AC_MSG_ERROR([You must have ProcFS enabled in your kernel!]);
+-   fi
+-fi
+ 
+ CFLAGS="$GGDBFLAGS $CFLAGS"
+ 
