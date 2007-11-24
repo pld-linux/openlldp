@@ -1,13 +1,15 @@
 Summary:	Open Source implementation of IEEE 802.1AB
 Name:		openlldp
 %define		_rc	alpha
-%define		rel	0.1
+%define		rel	0.2
 Version:	0.3
 Release:	0.%{_rc}.%{rel}
 License:	GPL
 Group:		Networking
 Source0:	http://dl.sourceforge.net/openlldp/%{name}-%{version}%{_rc}.tar.gz
 # Source0-md5:	131abc8c2563d33c4537d1c6dcb5c121
+Source1:	%{name}-lldp.8
+Patch0:		%{name}-noproc.patch
 URL:		http://openlldp.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -25,6 +27,7 @@ intended to help foster wider adoption of LLDP.
 
 %prep
 %setup -q -n %{name}-%{version}%{_rc}
+%patch0 -p1
 
 %build
 %{__aclocal}
@@ -35,9 +38,12 @@ intended to help foster wider adoption of LLDP.
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_mandir}/man8
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+install %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/man8/lldp.8
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -46,3 +52,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog LICENSE README
 %attr(755,root,root) %{_sbindir}/lldpd
+%{_mandir}/man8/*.8*
