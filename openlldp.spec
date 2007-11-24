@@ -1,7 +1,7 @@
 Summary:	Open Source implementation of IEEE 802.1AB
 Name:		openlldp
 %define		_rc	alpha
-%define		rel	0.2
+%define		rel	0.4
 Version:	0.3
 Release:	0.%{_rc}.%{rel}
 License:	GPL
@@ -10,6 +10,9 @@ Source0:	http://dl.sourceforge.net/openlldp/%{name}-%{version}%{_rc}.tar.gz
 # Source0-md5:	131abc8c2563d33c4537d1c6dcb5c121
 Source1:	%{name}-lldp.8
 Patch0:		%{name}-noproc.patch
+Patch1:		%{name}-bpf.patch
+Patch2:		%{name}-lldp_main.patch
+Patch3:		%{name}-min_interfaces.patch
 URL:		http://openlldp.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -28,6 +31,9 @@ intended to help foster wider adoption of LLDP.
 %prep
 %setup -q -n %{name}-%{version}%{_rc}
 %patch0 -p1
+%patch1 -p1
+%patch2 -p0
+%patch3 -p0
 
 %build
 %{__aclocal}
