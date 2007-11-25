@@ -1,7 +1,7 @@
 Summary:	Open Source implementation of IEEE 802.1AB
 Name:		openlldp
 %define		_rc	alpha
-%define		rel	0.4
+%define		rel	0.5
 Version:	0.3
 Release:	0.%{_rc}.%{rel}
 License:	GPL
