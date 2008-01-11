@@ -1,12 +1,12 @@
+%define		subver	alpha
+%define		rel	1
 Summary:	Open Source implementation of IEEE 802.1AB
 Name:		openlldp
-%define		_rc	alpha
-%define		rel	0.5
 Version:	0.3
-Release:	0.%{_rc}.%{rel}
+Release:	0.%{subver}.%{rel}
 License:	GPL
 Group:		Networking
-Source0:	http://dl.sourceforge.net/openlldp/%{name}-%{version}%{_rc}.tar.gz
+Source0:	http://dl.sourceforge.net/openlldp/%{name}-%{version}%{subver}.tar.gz
 # Source0-md5:	131abc8c2563d33c4537d1c6dcb5c121
 Source1:	%{name}-lldp.8
 Patch0:		%{name}-noproc.patch
@@ -19,17 +19,18 @@ BuildRequires:	automake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-The OpenLLDP project aims to provide a comprehensive implementation of the
-IEEE standard 802.1AB Link Layer Discovery Protocol. LLDP is an industry
-standard protocol designed to supplant proprietary Link-Layer protocols such
-as Extreme's EDP (Extreme Discovery Protocol) and CDP (Cisco Discovery
-Protocol). The goal of LLDP is to provide an inter-vendor compatible
-mechanism to deliver Link-Layer notifications to adjacent network devices.
-The Open Source implementation of LLDP provided by the OpenLLDP project is
-intended to help foster wider adoption of LLDP.
+The OpenLLDP project aims to provide a comprehensive implementation of
+the IEEE standard 802.1AB Link Layer Discovery Protocol. LLDP is an
+industry standard protocol designed to supplant proprietary Link-Layer
+protocols such as Extreme's EDP (Extreme Discovery Protocol) and CDP
+(Cisco Discovery Protocol). The goal of LLDP is to provide an
+inter-vendor compatible mechanism to deliver Link-Layer notifications
+to adjacent network devices. The Open Source implementation of LLDP
+provided by the OpenLLDP project is intended to help foster wider
+adoption of LLDP.
 
 %prep
-%setup -q -n %{name}-%{version}%{_rc}
+%setup -q -n %{name}-%{version}%{subver}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p0
@@ -49,7 +50,7 @@ install -d $RPM_BUILD_ROOT%{_mandir}/man8
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/man8/lldp.8
+cp -a %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/man8/lldp.8
 
 %clean
 rm -rf $RPM_BUILD_ROOT
