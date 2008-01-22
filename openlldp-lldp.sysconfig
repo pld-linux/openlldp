@@ -1,0 +1,15 @@
+# Customized settings for openlldp
+# $Id$
+
+# Set debug verbosity
+# A : Enable ALL debug flags.
+# c : Enable CONFIG debug flag.
+# s : Enable STATE debug flag.
+# t : Enable TLV debug flag.
+# i : Enable INT debug flag.
+# n : Enable SNMP debug flag.
+# x : Enable EXCESSIVE debug flag.							
+LLDP_DEBUG="n"
+
+# Log file
+LLDP_LOG_FILE="/var/log/lldpd.log"
