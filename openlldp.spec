@@ -1,5 +1,5 @@
 %define		subver	alpha
-%define		rel	1
+%define		rel	1.1
 Summary:	Open Source implementation of IEEE 802.1AB
 Name:		openlldp
 Version:	0.3
@@ -47,16 +47,14 @@ adoption of LLDP.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_mandir}/man8
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/init.d
+install -d $RPM_BUILD_ROOT{/etc/{sysconfig,rc.d/init.d},%{_mandir}/man8}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 cp -a %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/man8/lldp.8
-cp -a %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/init.d/lldpd
-cp -a %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/lldpd
+cp -a %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/lldpd
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/rc.d/init.d/lldpd
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -64,7 +62,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog LICENSE README
+%attr(754,root,root) /etc/rc.d/init.d/lldpd
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/lldpd
 %attr(755,root,root) %{_sbindir}/lldpd
-%attr(754,root,root) %{_sysconfdir}/init.d/lldpd
-%{_sysconfdir}/sysconfig/lldpd
 %{_mandir}/man8/*.8*
