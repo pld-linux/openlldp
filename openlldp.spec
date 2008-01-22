@@ -9,6 +9,8 @@ Group:		Networking
 Source0:	http://dl.sourceforge.net/openlldp/%{name}-%{version}%{subver}.tar.gz
 # Source0-md5:	131abc8c2563d33c4537d1c6dcb5c121
 Source1:	%{name}-lldp.8
+Source2:	%{name}-lldp.init
+Source3:	%{name}-lldp.sysconfig
 Patch0:		%{name}-noproc.patch
 Patch1:		%{name}-bpf.patch
 Patch2:		%{name}-lldp_main.patch
@@ -46,11 +48,15 @@ adoption of LLDP.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_mandir}/man8
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/init.d
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 cp -a %{SOURCE1} $RPM_BUILD_ROOT%{_mandir}/man8/lldp.8
+cp -a %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/init.d/lldpd
+cp -a %{SOURCE3} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/lldpd
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -59,4 +65,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog LICENSE README
 %attr(755,root,root) %{_sbindir}/lldpd
+%attr(754,root,root) %{_sysconfdir}/init.d/lldpd
+%{_sysconfdir}/sysconfig/lldpd
 %{_mandir}/man8/*.8*
