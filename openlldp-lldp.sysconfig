@@ -1,5 +1,6 @@
-# Customized settings for openlldp
 # $Id$
+#
+# Customized settings for openlldp
 
 # Set debug verbosity
 # A : Enable ALL debug flags.

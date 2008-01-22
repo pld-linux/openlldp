@@ -9,7 +9,7 @@
 #    		of the IEEE standard 802.1AB Link Layer Discovery Protocol.
 # processname:	lldpd
 #
-# Ilja Bobkevic (ilja.bobkevic@delfi.lt)
+# Ilja Bobkevic <ilja.bobkevic@delfi.lt>
 
 # Source function library
 . /etc/rc.d/init.d/functions
@@ -34,9 +34,9 @@ start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/lldpd ]; then
 		msg_starting lldpd
-# Default debug switch "n". Default log file /var/log/lldpd.log
-# For now force to background. Need to patch code for daemonizing
-		lldpd -d ${LLDP_DEBUG:-n} >> "${LLDP_LOG_FILE:-/var/log/lldpd.log}" &
+		# Default debug switch "n". Default log file /var/log/lldpd.log
+		# For now force to background. Need to patch code for daemonizing
+		/usr/sbin/lldpd -d ${LLDP_DEBUG:-n} >> "${LLDP_LOG_FILE:-/var/log/lldpd.log}" &
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/lldpd
 		ok
@@ -49,8 +49,8 @@ stop() {
 	# Stop daemons.
 	if [ -f /var/lock/subsys/lldpd ]; then
 		msg_stopping lldpd
-		rm -rf /var/lock/subsys/lldpd
-# Doesn't generate any pidfile, so just kill'em'all
+		rm -f /var/lock/subsys/lldpd
+		# Doesn't generate any pidfile, so just kill'em'all
 		killall -9 lldpd
 	else
 		msg_not_running lldpd
