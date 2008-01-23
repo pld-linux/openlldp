@@ -36,10 +36,21 @@ start() {
 		msg_starting lldpd
 		# Default debug switch "n". Default log file /var/log/lldpd.log
 		# For now use start-stop-daemon. Need to patch code for daemonizing
-		start-stop-daemon --start --background --pidfile /var/run/lldpd.pid --make-pidfile --exec /usr/sbin/lldpd -- -d ${LLDP_DEBUG:-n} >> "${LLDP_LOG_FILE:-/var/log/lldpd.log}"
+		start-stop-daemon \
+			--start \
+			--background \
+			--pidfile /var/run/lldpd.pid \
+			--make-pidfile \
+			--exec /usr/sbin/lldpd -- \
+			-d ${LLDP_DEBUG:-n} \
+			>> ${LLDP_LOG_FILE:-/var/log/lldpd.log}
 		RETVAL=$?
-		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/lldpd
-		ok
+		if [ $RETVAL -eq 0 ]; then
+		   	touch /var/lock/subsys/lldpd
+			ok
+		else
+			fail
+		fi
 	else
 		msg_already_running lldpd
 	fi
@@ -50,8 +61,8 @@ stop() {
 	if [ -f /var/lock/subsys/lldpd ]; then
 		msg_stopping lldpd
 		start-stop-daemon --stop --pidfile /var/run/lldpd.pid --name lldpd
-		rm -f /var/lock/subsys/lldpd /var/run/lldpd.pid
 		ok
+		rm -f /var/lock/subsys/lldpd /var/run/lldpd.pid
 	else
 		msg_not_running lldpd
 	fi
