@@ -1,5 +1,5 @@
 %define		subver	alpha
-%define		rel	1.1
+%define		rel	2
 Summary:	Open Source implementation of IEEE 802.1AB
 Name:		openlldp
 Version:	0.3
