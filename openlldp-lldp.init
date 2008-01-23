@@ -35,8 +35,8 @@ start() {
 	if [ ! -f /var/lock/subsys/lldpd ]; then
 		msg_starting lldpd
 		# Default debug switch "n". Default log file /var/log/lldpd.log
-		# For now force to background. Need to patch code for daemonizing
-		/usr/sbin/lldpd -d ${LLDP_DEBUG:-n} >> "${LLDP_LOG_FILE:-/var/log/lldpd.log}" &
+		# For now use start-stop-daemon. Need to patch code for daemonizing
+		start-stop-daemon --start --background --pidfile /var/run/lldpd.pid --make-pidfile --exec /usr/sbin/lldpd -- -d ${LLDP_DEBUG:-n} >> "${LLDP_LOG_FILE:-/var/log/lldpd.log}"
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/lldpd
 		ok
@@ -49,9 +49,9 @@ stop() {
 	# Stop daemons.
 	if [ -f /var/lock/subsys/lldpd ]; then
 		msg_stopping lldpd
-		rm -f /var/lock/subsys/lldpd
-		# Doesn't generate any pidfile, so just kill'em'all
-		killall -9 lldpd
+		start-stop-daemon --stop --pidfile /var/run/lldpd.pid --name lldpd
+		rm -f /var/lock/subsys/lldpd /var/run/lldpd.pid
+		ok
 	else
 		msg_not_running lldpd
 	fi
@@ -61,17 +61,21 @@ RETVAL=0
 # See how we were called.
 case "$1" in
   start)
-  	start
+	start
 	;;
   stop)
-  	stop
+	stop
+	;;
+  restart)
+	stop
+	start
 	;;
   status)
 	status lldpd
 	RETVAL=$?
 	;;
   *)
-	msg_usage "$0 {start|stop|status}"
+	msg_usage "$0 {start|stop|restart|status}"
 	exit 3
 	;;
 esac
