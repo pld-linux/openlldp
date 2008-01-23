@@ -23,7 +23,7 @@
 # Check that networking is up.
 if is_yes "${NETWORKING}"; then
 	if [ ! -f /var/lock/subsys/network -a "$1" != stop -a "$1" != status ]; then
-		msg_network_down lldpd
+		msg_network_down "OpenLLDP Daemon"
 		exit 1
 	fi
 else
@@ -33,7 +33,7 @@ fi
 start() {
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/lldpd ]; then
-		msg_starting lldpd
+		msg_starting "OpenLLDP Daemon"
 		# Default debug switch "n". Default log file /var/log/lldpd.log
 		# For now use start-stop-daemon. Need to patch code for daemonizing
 		start-stop-daemon \
@@ -52,19 +52,19 @@ start() {
 			fail
 		fi
 	else
-		msg_already_running lldpd
+		msg_already_running "OpenLLDP Daemon"
 	fi
 }
 
 stop() {
 	# Stop daemons.
 	if [ -f /var/lock/subsys/lldpd ]; then
-		msg_stopping lldpd
+		msg_stopping "OpenLLDP Daemon"
 		start-stop-daemon --stop --pidfile /var/run/lldpd.pid --name lldpd
 		ok
 		rm -f /var/lock/subsys/lldpd /var/run/lldpd.pid
 	else
-		msg_not_running lldpd
+		msg_not_running "OpenLLDP Daemon"
 	fi
 }
 
