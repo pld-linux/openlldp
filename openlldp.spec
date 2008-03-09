@@ -1,6 +1,7 @@
 %define		subver	alpha
 %define		rel	2
 Summary:	Open Source implementation of IEEE 802.1AB
+Summary(pl.UTF-8):	Implementacja IEEE 802.1AB z otwartymi źródłami
 Name:		openlldp
 Version:	0.3
 Release:	0.%{subver}.%{rel}
@@ -16,7 +17,7 @@ Patch1:		%{name}-bpf.patch
 Patch2:		%{name}-lldp_main.patch
 Patch3:		%{name}-min_interfaces.patch
 URL:		http://openlldp.sourceforge.net/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 1.5
 BuildRequires:	automake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -30,6 +31,18 @@ inter-vendor compatible mechanism to deliver Link-Layer notifications
 to adjacent network devices. The Open Source implementation of LLDP
 provided by the OpenLLDP project is intended to help foster wider
 adoption of LLDP.
+
+%description -l pl.UTF-8
+Celem projektu OpenLLDP jest dostarczenie kompletnej implementacji
+standardu IEEE 802.1AB Link Layer Discovery Protocol (protokołu
+wykrywania w warstwie połączenia). LLDP to standardowy protokół
+zaprojektowany w celu wyparcia własnościowych protokołów warstwy
+połączenia, takich jak EDP (Extreme Discovery Protocol) czy CDP (Cisco
+Discovery Protocol). Celem LLDP jest udostępnienie mechanizmu
+kompatybilnego między producentami dostarczającymi powiadomienia w
+warstwie połączenia o sąsiednich urządzeniach sieciowych.
+Implementacja z otwartymi źródłami udostępniana przez projekt OpenLLDP
+ma wspomóc szersze adoptowanie LLDP.
 
 %prep
 %setup -q -n %{name}-%{version}%{subver}
