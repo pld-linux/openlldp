@@ -1,24 +1,23 @@
 %define		subver	alpha
-%define		rel	2
+%define		rel	0.1
 Summary:	Open Source implementation of IEEE 802.1AB
 Summary(pl.UTF-8):	Implementacja IEEE 802.1AB z otwartymi źródłami
 Name:		openlldp
-Version:	0.3
+Version:	0.4
 Release:	0.%{subver}.%{rel}
 License:	GPL
 Group:		Networking
 Source0:	http://dl.sourceforge.net/openlldp/%{name}-%{version}%{subver}.tar.gz
-# Source0-md5:	131abc8c2563d33c4537d1c6dcb5c121
+# Source0-md5:	f48ffd632b96246cbf0f5c485dea3b01
 Source1:	%{name}-lldp.8
 Source2:	%{name}-lldp.init
 Source3:	%{name}-lldp.sysconfig
 Patch0:		%{name}-noproc.patch
 Patch1:		%{name}-bpf.patch
-Patch2:		%{name}-lldp_main.patch
-Patch3:		%{name}-min_interfaces.patch
 URL:		http://openlldp.sourceforge.net/
 BuildRequires:	autoconf >= 1.5
 BuildRequires:	automake
+BuildRequires:	libconfuse-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -48,8 +47,6 @@ ma wspomóc szersze adoptowanie LLDP.
 %setup -q -n %{name}-%{version}%{subver}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p0
-%patch3 -p0
 
 %build
 %{__aclocal}
@@ -78,4 +75,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(754,root,root) /etc/rc.d/init.d/lldpd
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/lldpd
 %attr(755,root,root) %{_sbindir}/lldpd
+%attr(755,root,root) %{_bindir}/lldpneighbors
 %{_mandir}/man8/*.8*

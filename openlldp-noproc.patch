@@ -1,17 +1,19 @@
---- ./configure.in.org	2007-03-23 04:40:27.000000000 +0100
-+++ ./configure.in	2007-11-24 22:57:18.402258633 +0100
-@@ -94,14 +94,6 @@ else
-   FRAMER="generic"
- fi
+--- ./configure.ac.org	2012-03-11 22:14:38.849452928 +0100
++++ ./configure.ac	2012-03-11 22:14:51.270020551 +0100
+@@ -188,16 +188,6 @@ AC_MSG_RESULT($framer)
+ AC_MSG_CHECKING([for platform OS])
+ AC_MSG_RESULT($platform)
  
--if test $FRAMER = "linux"; then
--   AC_MSG_CHECKING([for procfs support])
--   if test -r /proc/net/dev; then
+-AS_IF([test $framer = "linux"],
+-  [ MORELIBS="${MORELIBS} -lm"
+-    AC_MSG_CHECKING([for procfs support])
+-    if test -r /proc/net/dev; then
 -      AC_MSG_RESULT(okay)
--   else
+-    else
 -      AC_MSG_ERROR([You must have ProcFS enabled in your kernel!]);
--   fi
--fi
- 
- CFLAGS="$GGDBFLAGS $CFLAGS"
- 
+-    fi],
+-  [])
+-
+ AS_IF([test $framer = "generic"],
+   MORELIBS="${MORELIBS} -lwpcap -lpcap -ldnet",
+   [])
