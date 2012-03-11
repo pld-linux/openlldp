@@ -32,8 +32,7 @@ start() {
 			--pidfile /var/run/lldpd.pid \
 			--make-pidfile \
 			--exec /usr/sbin/lldpd -- \
-			-d ${LLDP_DEBUG:-n} \
-			>> ${LLDP_LOG_FILE:-/var/log/lldpd.log}
+			-d ${LLDP_DEBUG:-n}
 		RETVAL=$?
 		if [ $RETVAL -eq 0 ]; then
 		   	touch /var/lock/subsys/lldpd

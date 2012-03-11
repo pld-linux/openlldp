@@ -12,5 +12,4 @@
 # x : Enable EXCESSIVE debug flag.							
 LLDP_DEBUG="n"
 
-# Log file
-LLDP_LOG_FILE="/var/log/lldpd.log"
+LLDP_OPTS=""
