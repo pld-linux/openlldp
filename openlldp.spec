@@ -19,6 +19,8 @@ URL:		http://openlldp.sourceforge.net/
 BuildRequires:	autoconf >= 1.5
 BuildRequires:	automake
 BuildRequires:	libconfuse-devel
+Requires(post,preun,postun):	systemd-units >= 38
+Requires:	systemd-units >= 38
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
