@@ -7,7 +7,7 @@ Version:	0.4
 Release:	0.%{subver}.%{rel}
 License:	GPL
 Group:		Networking
-Source0:	http://dl.sourceforge.net/openlldp/%{name}-%{version}%{subver}.tar.bz2
+Source0:	http://download.sourceforge.net/openlldp/%{name}-%{version}%{subver}.tar.bz2
 # Source0-md5:	68d11173cfaecd5ae00ec57a28d94ee5
 Source1:	%{name}-lldp.8
 Source2:	%{name}-lldp.init
